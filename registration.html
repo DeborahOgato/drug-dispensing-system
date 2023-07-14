@@ -2,22 +2,98 @@
 <html>
 <head>
   <title>Registration</title>
+  <link rel="stylesheet" href="registration.css">
 </head>
 <body>
-  <h2>Registration</h2>
-  <form action="register.php" method="POST">
-    <input type="text" name="name" placeholder="Name" required><br>
-    <input type="text" name="username" placeholder="Username" required><br>
-    <input type="password" name="password" placeholder="Password" required><br>
-    <input type="email" name="email" placeholder="Email" required><br>
-    <input type="text" name="contact_number" placeholder="Contact Number" required><br>
-    <input type="text" name="address" placeholder="Address" required><br>
-    <select name="user_type">
-      <option value="doctor">doctor</option>
-      <option value="pharmacist">pharmacist</option>
-      <option value="admin">admin</option> <!-- Added admin option -->
-    </select><br>
-    <input type="submit" value="Register">
-  </form>
+  <div class="container">
+    <h2>Registration</h2>
+    <form action="register.php" method="POST">
+
+      <div class="form-group">
+        <label for="user_id">National ID:</label>
+        <input type="number" id="user_id" name="user_id" required>
+      </div>
+
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+      </div>
+
+      <div class="form-group">
+        <label for="full_name">Full Name:</label>
+        <input type="text" id="full_name" name="full_name" required>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+
+      <div class="form-group">
+        <label for="contact_number">Contact Number:</label>
+        <input type="text" id="contact_number" name="contact_number" required>
+      </div>
+
+      <div class="form-group">
+        <label for="date_of_birth">Date of Birth:</label>
+        <input type="date" id="date_of_birth" name="date_of_birth" required>
+      </div>
+
+      <div class="form-group">
+        <label for="role">Role:</label>
+        <select id="role" name="role" required>
+          <option value="Pharmacist">Pharmacist</option>
+          <option value="Patient">Patient</option>
+          <option value="Admin">Admin</option>
+          <option value="Doctor">Doctor</option>
+        </select>
+      </div>
+
+      <div id="additional-info" style="display: none;"></div>
+
+      <div class="form-group">
+        <input type="submit" value="Register">
+      </div>
+    </form>
+    <p>Already have an account? <a href="login.html">Login</a></p>
+  </div>
+
+  <script>
+    // Function to show additional info field based on selected role
+    function showAdditionalInfo() {
+      var roleSelect = document.getElementById("role");
+      var additionalInfoDiv = document.getElementById("additional-info");
+      var selectedRole = roleSelect.value;
+
+      if (selectedRole === "Doctor") {
+        additionalInfoDiv.innerHTML = `
+          <div class="form-group">
+            <label for="specialization">Specialization:</label>
+            <input type="text" id="specialization" name="specialization">
+          </div>
+        `;
+      } else if (selectedRole === "Patient") {
+        additionalInfoDiv.innerHTML = `
+          <div class="form-group">
+            <label for="allergies">Allergies:</label>
+            <input type="text" id="allergies" name="allergies">
+          </div>
+        `;
+      } else {
+        additionalInfoDiv.innerHTML = ""; // Clear additional info field
+      }
+
+      additionalInfoDiv.style.display = selectedRole === "Doctor" || selectedRole === "Patient" ? "block" : "none";
+    }
+
+    // Show additional info field on role selection change
+    document.getElementById("role").addEventListener("change", showAdditionalInfo);
+  </script>
 </body>
 </html>
+

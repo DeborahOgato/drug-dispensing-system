@@ -1,0 +1,72 @@
+/* Notebox style */
+.notebox {
+    background-color: #f8f8f8;
+    border: 1px solid #e5e5e5;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+  
+  /* Selectors and pseudo-classes */
+  h2 {
+    color: #333;
+  }
+  
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color:#1c4124;
+  }
+  
+  .container {
+    max-width: 300px;
+    padding: 20px;
+    background-color:#b2f5b4c2;
+    border: 1px solid #333;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  form {
+    margin-bottom: 20px;
+  }
+  
+  label {
+    display:inline-block;
+    width: 100px;
+    margin-right: 10px;
+    color: #1c4124;
+  }
+  
+  input[type="text"],
+  input[type="password"] {
+    flex: 1;
+    padding: 5px;
+    border: 1px solid #333;
+    border-radius: 3px;
+  }
+  
+  input[type="submit"] {
+    background-color:  #1c4124;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  input[type="submit"]:hover {
+    background-color: #4caf50;
+  }
+  
+  a {
+    color: #097765;
+    text-decoration: none;
+  }
+  
+  a:hover {
+    color: #4caf50;
+    text-decoration: underline;
+  }
+  

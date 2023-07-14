@@ -1,81 +1,62 @@
 <?php
-$host = 'localhost';
-$db = 'drug-dispensing-system';
-$user = 'root';
-$pass = '';
+session_start();
+ // Database connection credentials
+ $host = 'localhost';
+ $db = 'drug-dispensing-system';
+ $user = 'root';
+ $password = '';
 
-// Create a database connection
-$con = mysqli_connect($host, $user, $pass, $db);
-if (!$con) {
-    die("Connection failed: " . mysqli_connect_error());
-}
+ // Create a new mysqli connection
+ $conn = new mysqli($host, $user, $password, $db);
 
-// Check if the form is submitted
+ // Check if the connection was successful
+ if ($conn->connect_error) {
+     die("Connection failed: " . $conn->connect_error);
+ }
+
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get the submitted username and password
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    // Check if the user exists in the Doctors table
-    $query = "SELECT * FROM doctors WHERE username = ? AND password = ?";
-    $stmt = $con->prepare($query);
-    $stmt->bind_param("ss", $username, $password);
+    
+    // Prepare the query
+    $stmt = $conn->prepare("SELECT * FROM Users WHERE username = ? AND password = ?");
+
+    // Bind parameters
+    $stmt->bind_param('ss', $username, $password);
+
+    // Execute the query
     $stmt->execute();
+
+    // Fetch the user record
     $result = $stmt->get_result();
+    $user = $result->fetch_assoc();
 
-    if ($result->num_rows > 0) {
-        // Doctor is logged in
-        $userType = 'doctor';
-        $userRow = $result->fetch_assoc();
-    } else {
-        // Check if the user exists in the Pharmacists table
-        $query = "SELECT * FROM pharmacists WHERE username = ? AND password = ?";
-        $stmt = $con->prepare($query);
-        $stmt->bind_param("ss", $username, $password);
-        $stmt->execute();
-        $result = $stmt->get_result();
+    // Check if user exists
+    if ($user) {
+        $_SESSION['user_id'] = $user['user_id'];
+        $_SESSION['username'] = $user['username'];
+        $_SESSION['role'] = $user['role'];
 
-        if ($result->num_rows > 0) {
-            // Pharmacist is logged in
-            $userType = 'pharmacist';
-            $userRow = $result->fetch_assoc();
-        } else {
-            // Check if the user exists in the Admins table
-            $query = "SELECT * FROM admins WHERE username = ? AND password = ?";
-            $stmt = $con->prepare($query);
-            $stmt->bind_param("ss", $username, $password);
-            $stmt->execute();
-            $result = $stmt->get_result();
-
-            if ($result->num_rows > 0) {
-                // Admin is logged in
-                $userType = 'admin';
-                $userRow = $result->fetch_assoc();
-            } else {
-                // Invalid username or password
-                echo "Invalid username or password.";
-                $stmt->close();
-                $con->close();
-                exit();
-            }
+        // Redirect to the user's dashboard or appropriate page
+        if ($user['role'] === 'Doctor') {
+            header('Location: doctor_dashboard.php');
+        } elseif ($user['role'] === 'Pharmacist') {
+            header('Location: pharmacist_dashboard.php');
+        } elseif ($user['role'] === 'Patient') {
+            header('Location: patient_dashboard.php');
+        } elseif ($user['role'] === 'Admin') {
+            header('Location: admin_dashboard.php');
         }
+        exit();
+    } else {
+        // User not found or invalid credentials
+        echo "Invalid username or password.";
     }
 
-    // Start the session and store user information
-    session_start();
-    $_SESSION['userType'] = $userType;
-    $_SESSION['username'] = $userRow['username'];
-
-    // Redirect to appropriate page based on user type
-    if ($userType === 'doctor') {
-        header("Location: doctor_page.php");
-    } else if ($userType === 'pharmacist') {
-        header("Location: pharmacist_page.php");
-    } else if ($userType === 'admin') {
-        header("Location: admin_page.php");
-    }
-    exit();
+    // Close the database connection
+    $conn->close();
 }
-
-$con->close(); // Close the database connection
 ?>
+

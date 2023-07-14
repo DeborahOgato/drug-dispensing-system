@@ -2,67 +2,128 @@
 $host = 'localhost';
 $db = 'drug-dispensing-system';
 $user = 'root';
-$pass = '';
+$password = '';
 
-// Create a database connection
-$mysqli = new mysqli($host, $user, $pass, $db);
-if ($mysqli->connect_error) {
-    die('Connection Error: ' . $mysqli->connect_error);
+// Create a new mysqli connection
+$conn = new mysqli($host, $user, $password, $db);
+
+// Check if the connection was successful
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
 
-// Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Retrieve the entered information
-    $name = $_POST['name'];
+    $user_id= $_POST['user_id'];
     $username = $_POST['username'];
+    $full_name = $_POST['full_name'];
     $password = $_POST['password'];
     $email = $_POST['email'];
-    $contactNumber = $_POST['contact_number'];
-    $address = $_POST['address'];
-    $userType = $_POST['user_type'];
+    $contact_number = $_POST['contact_number'];
+    $date_of_birth = $_POST['date_of_birth'];
+    $role = $_POST['role'];
 
-    // Check if the username is already taken
-    $query = "SELECT * FROM doctors WHERE username = ?";
-    $stmt = $mysqli->prepare($query);
-    $stmt->bind_param("s", $username);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    // Calculate the age based on the date of birth
+    $dob = new DateTime($date_of_birth);
+    $current_date = new DateTime();
+    $age = $dob->diff($current_date)->y;
 
-    if ($result->num_rows > 0) {
-        echo "Username already exists. Please choose a different username.";
-        $stmt->close();
-        $mysqli->close();
-        exit();
+
+    if(isset($user_id) && !empty($user_id)) {
+
+    // Prepare the query for inserting into the Users table
+    $stmt_users = $conn->prepare("INSERT INTO Users (user_id, username, full_name, password, email, contact_number, date_of_birth, age, role) VALUES (?,?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt_users->bind_param('sssssssss', $user_id, $username, $full_name, $password, $email, $contact_number, $date_of_birth, $age, $role);
+    $stmt_users->execute();
+
+
+    if($stmt_users->affected_rows>0){
+
+    
+
+    // Insert into the respective table based on the role
+    switch ($role) {
+        case 'Doctor':
+            $specialization = isset($_POST['specialization'])? $_POST['specialization']: null;
+            $stmt_doctors = $conn->prepare("INSERT INTO Doctors (user_id,specialization) VALUES (?,?)");
+            $stmt_doctors->bind_param('ss', $user_id, $specialization);     
+
+            $stmt_doctors->execute();
+
+            $doctor_number = $stmt_doctors->insert_id;
+            $doctor_id = 'D' . str_pad($doctor_number, 4, '0', STR_PAD_LEFT);
+            
+            // Update the doctor record with the doctor_unique_id
+            $stmt_update = $conn->prepare("UPDATE Doctors SET doctor_id = ? WHERE doctor_number = ?");
+            $stmt_update->bind_param('si', $doctor_id, $doctor_number);
+            $stmt_update->execute();
+            
+            $stmt_doctors->close();
+            break;
+        case 'Pharmacist':
+            $stmt_pharmacists = $conn->prepare("INSERT INTO Pharmacists (user_id) VALUES (?)");
+            $stmt_pharmacists->bind_param('i', $user_id);
+            
+            $stmt_pharmacists->execute();
+            
+            $pharmacist_number = $stmt_pharmacists->insert_id;
+            $pharmacist_id = 'Ph' . str_pad($pharmacist_number, 4, '0', STR_PAD_LEFT);
+
+            // Update the pharmacist record with the pharmacist_unique_id
+            $stmt_update = $conn->prepare("UPDATE Pharmacists SET pharmacist_id = ? WHERE pharmacist_number = ?");
+            $stmt_update->bind_param('si', $pharmacist_id, $pharmacist_number);
+            $stmt_update->execute();
+            
+            $stmt_pharmacists->close();
+            break;
+        case 'Patient':
+            $allergies = isset($_POST['allergies']) ? $_POST['allergies']: null;
+            $stmt_patients = $conn->prepare("INSERT INTO Patients (user_id,allergies) VALUES (?,?)");
+            $stmt_patients->bind_param('ss', $user_id, $allergies);
+    
+            $stmt_patients->execute();
+
+            $patient_number = $stmt_patients->insert_id;
+            $patient_id = 'P' . str_pad($patient_number, 4, '0', STR_PAD_LEFT);
+            
+            // Update the patient record with the patient_unique_id
+            $stmt_update = $conn->prepare("UPDATE Patients SET patient_id = ? WHERE patient_number = ?");
+            $stmt_update->bind_param('si', $patient_id, $patient_number);
+            $stmt_update->execute();
+            
+            $stmt_patients->close();
+            break;
+        case 'Admin':
+            $stmt_admins = $conn->prepare("INSERT INTO Admins (user_id) VALUES (?)");
+            $stmt_admins->bind_param('i', $user_id);
+
+            $stmt_admins->execute();
+
+            $admin_number = $stmt_admins->insert_id;
+            $admin_id = 'A' . str_pad($admin_number, 4, '0', STR_PAD_LEFT);
+            
+            // Update the admin record with the admin_unique_id
+            $stmt_update = $conn->prepare("UPDATE Admins SET admin_id = ? WHERE admin_number = ?");
+            $stmt_update->bind_param('si', $admin_id, $admin_number);
+            $stmt_update->execute();
+            
+            $stmt_admins->close();
+            break;
+        default:
+            break;
     }
 
-    // Insert the user's information into the appropriate table based on the user type
-    if ($userType === 'doctor') {
-        $insertQuery = "INSERT INTO doctors (name, username, password, email, contact_number, address) VALUES (?, ?, ?, ?, ?, ?)";
-    } else if ($userType === 'pharmacist') {
-        $insertQuery = "INSERT INTO pharmacists (name, username, password, email, contact_number, address) VALUES (?, ?, ?, ?, ?, ?)";
-    } else if ($userType === 'admin') { // Insert as admin
-        $insertQuery = "INSERT INTO admins (name, username, password, email, contact_number, address) VALUES (?, ?, ?, ?, ?, ?)";
-    } else {
-        echo "Invalid user type.";
-        $stmt->close();
-        $mysqli->close();
-        exit();
-    }
+    $user_id=$stmt_users->insert_id;
+  
+    echo "Registration successful. You can now <a href='login.html'>login</a>.";
+  }else{
+    echo "Failed to register. Please try again";
+  }
 
-    $stmt = $mysqli->prepare($insertQuery);
-    $stmt->bind_param("ssssss", $name, $username, $password, $email, $contactNumber, $address);
-    $stmt->execute();
-
-    // Notify the admin of the new user registration
-    $adminEmail = "admin@example.com";
-    $subject = "New User Registration";
-    $message = "A new user has registered. Username: $username, UserType: $userType";
-    mail($adminEmail, $subject, $message);
-
-    echo "Registration successful!";
-
-    $stmt->close(); // Close the statement after execution
+    // Close the database connection
+    $stmt_users->close();
+} else {
+  echo " User ID is not provided.";
 }
-
-$mysqli->close(); // Close the database connection
+    $conn->close();
+}
 ?>
