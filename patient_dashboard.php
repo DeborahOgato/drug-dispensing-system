@@ -21,7 +21,7 @@ if (isset($_SESSION['role']) && $_SESSION['role'] === 'Patient') {
     }
 
     // Prepare and execute the query to fetch patient's details
-    $stmt = $conn->prepare("SELECT * FROM patients WHERE user_id = ?");
+    $stmt = $conn->prepare("SELECT u.*, p.* FROM users u JOIN patients p ON u.user_id = p.user_id WHERE u.user_id = ?");
     $stmt->bind_param('s', $user_id);
     $stmt->execute();
 
@@ -29,66 +29,58 @@ if (isset($_SESSION['role']) && $_SESSION['role'] === 'Patient') {
     $result = $stmt->get_result();
     $patient = $result->fetch_assoc();
 
-    // Calculate the age based on the date of birth
-    $date_of_birth = new DateTime($patient['date_of_birth']);
-    $current_date = new DateTime();
-    $age = $current_date->diff($date_of_birth)->y;
 
-    // HTML template for patient's dashboard
-    $dashboard = "
-    <html>
-    <head>
-      <title>Patient Dashboard</title>
-      <style>
-        .dropdown {
-          position: relative;
-          display: inline-block;
-        }
-        .dropdown-content {
-          display: none;
-          position: absolute;
-          right: 0;
-          background-color: #f9f9f9;
-          min-width: 160px;
-          box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-          padding: 12px 16px;
-          z-index: 1;
-        }
-        .dropdown:hover .dropdown-content {
-          display: block;
-        }
-      </style>
-    </head>
-    <body>
-      <h2>Welcome, $username!</h2>
-      <div class='dropdown'>
-        <button>Actions</button>
-        <div class='dropdown-content'>
-          <a href='view_patient.php'>View Details</a>
-          <a href='update_patient.php'>Update Details</a>
-          <a href='delete_patient.php'>Delete Account</a>
-          <a href='disable_patient.php'>Disable Account</a>
-          <a href='logout.php'>Logout</a>
-        </div>
-      </div>
-      <div>
-        <h3>Patient Details:</h3>
-        <p>Name: {$patient['full_name']}</p>
-        <p>Date of Birth: {$patient['date_of_birth']}</p>
-        <p>Age: $age</p>
-        <p>Email: {$patient['email']}</p>
-        <p>Contact Number: {$patient['contact_number']}</p>
-      </div>
-    </body>
-    </html>
-  ";
-
-  echo $dashboard;
-
-  // Close the database connection
-  $conn->close();
-} else {
-  header('Location: login.html');
-  exit();
 }
 ?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Patient Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="patient_dashboard.css">
+</head>
+<body>
+    <?php if (isset($patient)) : ?>
+    <h2>Welcome, <?php echo $username; ?>!</h2>
+    <div class="dropdown">
+        <button>Actions</button>
+        <div class="dropdown-content">
+            <!-- Link to view patient details -->
+            <a href="#patient_profile">View Profile</a>
+            <!-- Link to update patient details -->
+            <a href="update_patient.php">Update Account</a>
+            <!-- Link to delete patient account -->
+            <a href="delete_patient.php" onclick="return confirm('Are you sure you want to delete your account?')">Delete Account</a>
+            <!-- Link to disable patient account -->
+            <a href="disable_patient.php" onclick="return confirm('Are you sure you want to disable your account?')">Disable Account</a>
+            <!-- Link to view medical records -->
+            <a href="view_medical_records.php">View Medical Records</a>
+            <!-- Logout link -->
+            <a href="logout.php">Logout</a>
+        </div>
+    </div>
+
+    <!-- Patient Profile -->
+    <div class="main" id="patient_profile">
+        <h2>Patient Profile</h2>
+        <table>
+            <tr>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Contact Number</th>
+                <th>Age</th>
+            </tr>
+            <tr>
+                <td><?php echo $patient['full_name']; ?></td>
+                <td><?php echo $patient['email']; ?></td>
+                <td><?php echo $patient['contact_number']; ?></td>
+                <td><?php echo $patient['age']; ?></td>
+            </tr>
+        </table>
+    </div>
+
+    <?php else : ?>
+        <p>You must be logged in as a patient to access this page.</p>
+    <?php endif; ?>
+</body>
+</html>

@@ -1,0 +1,39 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: white;
+    color: black;
+    margin: 0;
+    padding: 0;
+}
+
+h2 {
+    color: black;
+}
+
+/* Pharmacist List Table Styles */
+.pharmacist-list {
+    width: 90%;
+    margin: 20px auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid white;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid black;
+}
+
+th {
+    background-color: #1c4124;
+    font-weight: bold;
+}
+
+tr:hover {
+    background-color: #569b65;
+}

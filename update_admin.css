@@ -1,0 +1,62 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+h2 {
+    color: #333;
+}
+
+/* Form Styles */
+.update-form {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.update-form form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.update-form label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.update-form input[type="text"],
+.update-form input[type="email"],
+.update-form input[type="password"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.update-form input[type="submit"] {
+    padding: 10px;
+    background-color: #1c4124;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.update-form input[type="submit"]:hover {
+    background-color: #4caf50;
+}
+
+/* Error Message */
+.error-message {
+    color: #ff0000;
+    font-size: 14px;
+    margin-bottom: 15px;
+}

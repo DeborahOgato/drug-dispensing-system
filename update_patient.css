@@ -1,0 +1,64 @@
+/* Reset default margin and padding */
+body, h1, h2, h3, p, ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+}
+
+/* Update Pharmacist Details Styles */
+h2 {
+    margin-top: 20px;
+    text-align: center;
+    color: #1c4124;
+}
+
+.update-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #1c4124;
+    border-radius: 4px;
+    background-color: #c5e6d8;
+}
+
+.update-form form {
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 10px;
+}
+
+.update-form label {
+    color: #1c4124;
+}
+
+.update-form input[type="text"],
+.update-form input[type="email"],
+.update-form input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #1c4124;
+    border-radius: 4px;
+}
+
+.update-form input[type="submit"] {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+/* Feedback Message Styles */
+p {
+    text-align: center;
+    color: #1c4124;
+    margin-top: 10px;
+}

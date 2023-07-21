@@ -8,7 +8,7 @@
   
   /* Selectors and pseudo-classes */
   h2 {
-    color: #333;
+    color: black;
   }
 
   body {
@@ -23,7 +23,7 @@
     max-width: 300px;
     padding: 20px;
     background-color: #b2f5b4c2;
-    border: 1px solid #333;
+    border: 1px solid black;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
@@ -46,7 +46,7 @@
   select {
     flex: 1;
     padding: 5px;
-    border: 1px solid #333;
+    border: 1px solid black;
     border-radius: 3px;
   }
   

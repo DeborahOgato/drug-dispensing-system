@@ -1,0 +1,85 @@
+/* Reset default margin and padding */
+body, h1, h2, h3, p, ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+}
+
+/* Patient Dashboard Styles */
+h2 {
+    margin-top: 20px;
+    text-align: center;
+    color: #1c4124;
+}
+
+.dropdown {
+    display: inline-block;
+    margin-top: 20px;
+    position: relative;
+}
+
+.dropdown button {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: #1c4124;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #4caf50;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Patient Profile Styles */
+.main {
+    margin: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #333;
+}
+
+th {
+    background-color: #4caf50;
+    color: #f2f2f2;
+}
+
+/* Feedback Message Styles */
+p {
+    text-align: center;
+    color: #097765;
+    margin-top: 10px;
+}

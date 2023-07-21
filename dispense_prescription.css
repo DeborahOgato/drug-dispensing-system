@@ -1,0 +1,51 @@
+/* Reset default margin and padding */
+body, h1, h2, h3, p, ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+}
+
+/* Dispense Prescription Styles */
+h2 {
+    margin-top: 20px;
+    text-align: center;
+    color: #1c4124;
+}
+
+.dispense-prescription {
+    text-align: center;
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #1c4124;
+    border-radius: 4px;
+    background-color: #c5e6d8;
+}
+
+.dispense-prescription p {
+    color: #1c4124;
+    margin-bottom: 10px;
+}
+
+.dispense-prescription form {
+    display: inline-block;
+}
+
+.dispense-prescription input[type="submit"] {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+/* Feedback Message Styles */
+p {
+    text-align: center;
+    color: #1c4124;
+    margin-top: 10px;
+}

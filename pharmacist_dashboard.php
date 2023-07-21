@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-// Check if the user is logged in as a pharmacist
+// Check if user is logged in as a pharmacist
 if (isset($_SESSION['role']) && $_SESSION['role'] === 'Pharmacist') {
     $user_id = $_SESSION['user_id'];
     $username = $_SESSION['username'];
@@ -21,67 +21,74 @@ if (isset($_SESSION['role']) && $_SESSION['role'] === 'Pharmacist') {
     }
 
     // Prepare and execute the query to fetch pharmacist's details
-    $stmt = $conn->prepare("SELECT * FROM pharmacists WHERE user_id = ?");
+    $stmt = $conn->prepare("SELECT u.*, ph.* FROM users u JOIN pharmacists ph ON u.user_id = ph.user_id WHERE u.user_id = ?");
     $stmt->bind_param('s', $user_id);
     $stmt->execute();
 
     // Fetch the pharmacist's details
     $result = $stmt->get_result();
     $pharmacist = $result->fetch_assoc();
-
-    // HTML template for pharmacist's dashboard
-    $dashboard = "
-    <html>
-    <head>
-      <title>Pharmacist Dashboard</title>
-      <style>
-        .dropdown {
-          position: relative;
-          display: inline-block;
-        }
-        .dropdown-content {
-          display: none;
-          position: absolute;
-          right: 0;
-          background-color: #f9f9f9;
-          min-width: 160px;
-          box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-          padding: 12px 16px;
-          z-index: 1;
-        }
-        .dropdown:hover .dropdown-content {
-          display: block;
-        }
-      </style>
-    </head>
-    <body>
-      <h2>Welcome, $username!</h2>
-      <div class='dropdown'>
-        <button>Actions</button>
-        <div class='dropdown-content'>
-          <a href='view_pharmacist.php'>View Details</a>
-          <a href='update_pharmacist.php'>Update Details</a>
-          <a href='delete_pharmacist.php'>Delete Account</a>
-          <a href='disable_pharmacist.php'>Disable Account</a>
-          <a href='logout.php'>Logout</a>
-        </div>
-      </div>
-      <div>
-        <h3>Pharmacist Details:</h3>
-        <p>Name: {$pharmacist['full_name']}</p>
-        <p>Email: {$pharmacist['email']}</p>
-        <p>Contact Number: {$pharmacist['contact_number']}</p>
-      </div>
-    </body>
-    </html>
-  ";
-
-  echo $dashboard;
-
-  // Close the database connection
-  $conn->close();
-} else {
-  header('Location: login.html');
-  exit();
 }
 ?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pharmacist Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="pharmacist_dashboard.css">
+</head>
+<body>
+    <?php if (isset($pharmacist)) : ?>
+    <h2>Welcome, <?php echo $username; ?>!</h2>
+    <div class="dropdown">
+        <button>Actions</button>
+        <div class="dropdown-content">
+            <!-- Link to view pharmacist details -->
+            <a href="#pharmacist_profile">View Profile</a>
+            <!-- Link to update pharmacist details -->
+            <a href="update_pharmacist.php">Update Details</a>
+            <!-- Link to delete pharmacist account -->
+            <a href="delete_pharmacist.php" onclick="return confirm('Are you sure you want to delete your account?')">Delete Account</a>
+            <!-- Link to disable pharmacist account -->
+            <a href="disable_pharmacist.php" onclick="return confirm('Are you sure you want to disable your account?')">Disable Account</a>
+            <!-- Link to view all patients -->
+            <a href="view_patients.php">View All Patients</a>
+            <!-- Link to view all drugs -->
+            <a href="view_drugs.php">View All Drugs</a>
+            <!-- Link to add new drug -->
+            <a href="add_drug.php">Add New Drug</a>
+            <!-- Link to view prescriptions (not dispensed) -->
+            <a href="view_prescriptions.php?status=not_dispensed">View Prescriptions (Not Dispensed)</a>
+            <!-- Link to view all prescriptions -->
+            <a href="view_prescriptions.php">View All Prescriptions</a>
+            <!-- Link to dispense prescription -->
+            <a href="dispense_prescription.php">Dispense Prescription</a>
+            <!-- Logout link -->
+            <a href="logout.php">Logout</a>
+        </div>
+    </div>
+
+    <!-- Pharmacist Profile -->
+    <div class="main" id="pharmacist_profile">
+        <h2>Pharmacist Profile</h2>
+        <table>
+            <tr>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Contact Number</th>
+                <th>Age</th>
+            </tr>
+            <tr>
+                <td><?php echo $pharmacist['full_name']; ?></td>
+                <td><?php echo $pharmacist['email']; ?></td>
+                <td><?php echo $pharmacist['contact_number']; ?></td>
+                <td><?php echo $pharmacist['age']; ?></td>
+            </tr>
+        </table>
+    </div>
+
+    <?php else : ?>
+        <p>You must be logged in as a pharmacist to access this page.</p>
+    <?php endif; ?>
+</body>
+</html>
