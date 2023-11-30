@@ -36,6 +36,7 @@ if (isset($_SESSION['role']) && $_SESSION['role'] === 'Admin') {
     <link rel="stylesheet" type="text/css" href="view_pharmacists.css">
 </head>
 <body>
+<?php include "header.html";?>
     <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'Admin') : ?>
     <h2>View Pharmacists</h2>
     <div class="pharmacist-list">
@@ -65,5 +66,6 @@ if (isset($_SESSION['role']) && $_SESSION['role'] === 'Admin') {
     <?php else : ?>
         <p>You must be logged in as an admin to access this page.</p>
     <?php endif; ?>
+    <?php include "footer.html";?>
 </body>
 </html>

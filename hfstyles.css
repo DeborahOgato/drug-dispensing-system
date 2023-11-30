@@ -1,0 +1,129 @@
+/* Reset some default styles */
+body, ul {
+    margin: 0;
+    padding: 0;
+}
+
+/* Style the header */
+header {
+    background-color: #1c4124;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .logo img {
+    width: 50px; 
+    height: auto; 
+}
+  
+  
+  header a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  
+  header a:hover {
+    color: #4caf50;
+  }
+
+  header ul {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  header li {
+    margin-right: 20px;
+  }
+
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+h1 {
+    font-size: 24px;
+}
+
+nav ul {
+    list-style: none;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+}
+
+/* Style the footer */
+footer {
+    background-color: #1c4124;
+    color: white;
+    text-align: center;
+    padding: 5px 0;
+    position: fixed;
+    bottom: 0; 
+    width: 100%; 
+}
+
+footer p {
+    font-size: 12px;
+}
+
+footer ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+footer li {
+    margin-right: 20px;
+}
+
+footer li:last-child {
+    margin-right: 0;
+}
+
+footer a {
+    color: white;
+    text-decoration: none;
+    margin-right: 20px;
+}
+
+footer a:hover {
+    color: #4caf50;
+}
+
+/* Responsive styles (adjust as needed) */
+@media screen and (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    nav ul {
+        margin-top: 10px;
+    }
+
+    nav ul li {
+        display: block;
+        margin-bottom: 10px;
+    }
+}
+/* Small-sized social icons */
+.social-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+}

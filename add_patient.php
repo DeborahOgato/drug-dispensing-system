@@ -87,6 +87,7 @@ if (isset($_SESSION['role']) && ($_SESSION['role'] === 'Admin' || $_SESSION['rol
     <link rel="stylesheet" type="text/css" href="add_patient.css">
 </head>
 <body>
+<?php include "header.html";?>
     <?php if (isset($_SESSION['role']) && ($_SESSION['role'] === 'Admin' || $_SESSION['role'] === 'Doctor')) : ?>
     <h2>Add New Patient</h2>
     <div class="add-patient-form">
@@ -113,5 +114,6 @@ if (isset($_SESSION['role']) && ($_SESSION['role'] === 'Admin' || $_SESSION['rol
     <?php else : ?>
         <p>You must be logged in as an admin or doctor to access this page.</p>
     <?php endif; ?>
+    <?php include "footer.html";?>
 </body>
 </html>

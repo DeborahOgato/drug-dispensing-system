@@ -58,6 +58,7 @@ if (isset($_SESSION['role']) && ($_SESSION['role'] === 'Admin' || $_SESSION['rol
     <link rel="stylesheet" type="text/css" href="view_patients.css">
 </head>
 <body>
+<?php include "header.html";?>
     <h2>List of Patients</h2>
     <form method="GET" action="view_patients.php">
         <label for="search">Search:</label>
@@ -99,5 +100,6 @@ if (isset($_SESSION['role']) && ($_SESSION['role'] === 'Admin' || $_SESSION['rol
     <?php else : ?>
         <p>No patients found.</p>
     <?php endif; ?>
+    <?php include "footer.html";?>
 </body>
 </html>

@@ -86,8 +86,33 @@ var_dump($prescription_id);
     <link rel="stylesheet" type="text/css" href="dispense_prescription.css">
 </head>
 <body>
+<?php include "header.html";?>
     <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'Pharmacist') : ?>
     <h2>Dispense Prescription</h2>
+    <div class="dropdown">
+        <button>Actions</button>
+        <div class="dropdown-content">
+           
+            <!-- Link to update pharmacist details -->
+            <a href="update_pharmacist.php">Update Details</a>
+            <!-- Link to delete pharmacist account -->
+            <a href="delete_pharmacist.php" onclick="return confirm('Are you sure you want to delete your account?')">Delete Account</a>
+            <!-- Link to disable pharmacist account -->
+            <a href="disable_pharmacist.php" onclick="return confirm('Are you sure you want to disable your account?')">Disable Account</a>
+            <!-- Link to view all patients -->
+            <a href="view_patients.php">View All Patients</a>
+            <!-- Link to view all drugs -->
+            <a href="view_drugs.php">View All Drugs</a>
+            <!-- Link to add new drug -->
+            <a href="add_drug.php">Add New Drug</a>
+            <!-- Link to view prescriptions (not dispensed) -->
+            <a href="view_prescriptions.php?status=not_dispensed">View Prescriptions (Not Dispensed)</a>
+            <!-- Link to view all prescriptions -->
+            <a href="view_prescriptions.php">View All Prescriptions</a>
+           
+           
+        </div>
+    </div>
     <div class="dispense-prescription">
         <?php if (!$prescription || $prescription['dispensed'] == 1) : ?>
             <p>No prescription to dispense or prescription is already dispensed.</p>
@@ -104,5 +129,6 @@ var_dump($prescription_id);
     <?php else : ?>
         <p>You must be logged in as a pharmacist to access this page.</p>
     <?php endif; ?>
+    <?php include "footer.html";?>
 </body>
 </html>

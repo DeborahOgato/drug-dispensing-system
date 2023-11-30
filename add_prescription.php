@@ -79,6 +79,7 @@ if (isset($_SESSION['role']) && $_SESSION['role'] === 'Doctor') {
     <link rel="stylesheet" type="text/css" href="add_prescription.css">
 </head>
 <body>
+<?php include "header.html";?>
     <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'Doctor') : ?>
     <h2>Add Prescription</h2>
     <div class="add-prescription-form">
@@ -100,5 +101,6 @@ if (isset($_SESSION['role']) && $_SESSION['role'] === 'Doctor') {
     <?php else : ?>
         <p>You must be logged in as a doctor to access this page.</p>
     <?php endif; ?>
+    <?php include "footer.html";?>
 </body>
 </html>

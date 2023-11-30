@@ -39,6 +39,7 @@ if (isset($_SESSION['role']) && $_SESSION['role'] === 'Admin') {
     <link rel="stylesheet" type="text/css" href="update_admin.css">
 </head>
 <body>
+<?php include "header.html";?>
     <?php if (isset($admin)) : ?>
     <h2>Update Admin Details</h2>
     <div class="update-form">
@@ -167,5 +168,6 @@ if (isset($_SESSION['role']) && $_SESSION['role'] === 'Admin') {
   
     }
     ?>
+     <?php include "footer.html";?>
 </body>
 </html>

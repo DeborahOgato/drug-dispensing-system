@@ -7,6 +7,7 @@ body, h1, h2, h3, p, ul, li {
 body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
+    margin-bottom: 60px;
 }
 
 /* Navigation Bar Styles */
@@ -109,6 +110,9 @@ footer {
     color: white;
     text-align: center;
     padding: 20px 0;
+    position: fixed;
+    bottom: 0; 
+    width: 100%; 
 }
 
 footer p {

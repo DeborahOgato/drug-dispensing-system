@@ -61,6 +61,7 @@ if (isset($_GET['search'])) {
     <link rel="stylesheet" type="text/css" href="view_prescriptions.css">
 </head>
 <body>
+<?php include "header.html";?>
     <?php if (isset($_SESSION['role']) && in_array($_SESSION['role'], ['Doctor', 'Pharmacist', 'Admin'])) : ?>
     <h2>View Prescriptions</h2>
     <div class="search-form">
@@ -106,5 +107,6 @@ if (isset($_GET['search'])) {
     <?php else : ?>
         <p>You must be logged in as a doctor, pharmacist, or admin to access this page.</p>
     <?php endif; ?>
+    <?php include "footer.html";?>
 </body>
 </html>

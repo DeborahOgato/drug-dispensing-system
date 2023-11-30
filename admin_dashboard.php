@@ -38,14 +38,13 @@ if (isset($_SESSION['role']) && $_SESSION['role'] === 'Admin') {
     <link rel="stylesheet" type="text/css" href="admin_dashboard.css">
 </head>
 <body>
+<?php include "header.html";?>
     <?php if (isset($admin)) : ?>
         <h2>Welcome, <?php echo $admin_username; ?></h2>
         <div class="dropdown">
             <button>Actions</button>
             <div class="dropdown-content">
-                <!-- Link to view admin details -->
-                <a href="#admin_profile">View Profile</a>
-                <!-- Link to update admin details -->
+              
                 <a href="update_admin.php">Update Details</a>
                 <!-- Link to delete admin account -->
                 <a href="delete_admin.php" onclick="return confirm('Are you sure you want to delete your account?')">Delete Account</a>
@@ -96,5 +95,6 @@ if (isset($_SESSION['role']) && $_SESSION['role'] === 'Admin') {
     <?php else : ?>
         <p>You must be logged in as an admin to access this page.</p>
     <?php endif; ?>
+    <?php include "footer.html";?>
 </body>
 </html>

@@ -38,13 +38,13 @@ if (isset($_SESSION['role']) && $_SESSION['role'] === 'Pharmacist') {
     <link rel="stylesheet" type="text/css" href="pharmacist_dashboard.css">
 </head>
 <body>
+<?php include "header.html";?>
     <?php if (isset($pharmacist)) : ?>
     <h2>Welcome, <?php echo $username; ?>!</h2>
     <div class="dropdown">
         <button>Actions</button>
         <div class="dropdown-content">
-            <!-- Link to view pharmacist details -->
-            <a href="#pharmacist_profile">View Profile</a>
+           
             <!-- Link to update pharmacist details -->
             <a href="update_pharmacist.php">Update Details</a>
             <!-- Link to delete pharmacist account -->
@@ -61,10 +61,8 @@ if (isset($_SESSION['role']) && $_SESSION['role'] === 'Pharmacist') {
             <a href="view_prescriptions.php?status=not_dispensed">View Prescriptions (Not Dispensed)</a>
             <!-- Link to view all prescriptions -->
             <a href="view_prescriptions.php">View All Prescriptions</a>
-            <!-- Link to dispense prescription -->
-            <a href="dispense_prescription.php">Dispense Prescription</a>
-            <!-- Logout link -->
-            <a href="logout.php">Logout</a>
+           
+           
         </div>
     </div>
 
@@ -90,5 +88,6 @@ if (isset($_SESSION['role']) && $_SESSION['role'] === 'Pharmacist') {
     <?php else : ?>
         <p>You must be logged in as a pharmacist to access this page.</p>
     <?php endif; ?>
+    <?php include "footer.html";?>
 </body>
 </html>

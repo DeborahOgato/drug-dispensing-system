@@ -1,0 +1,24 @@
+/* Add styles for the drug details page */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    padding: 20px;
+}
+
+h2 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+p {
+    color: #555;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    margin: 20px 0;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Add more styles as needed */

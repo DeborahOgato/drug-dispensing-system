@@ -13,10 +13,10 @@ h2 {
 
 /* Add Drug Form Styles */
 .add-drug-form {
-    width: 400px;
+    width: 350px;
     margin: 20px auto;
     background-color: #fff;
-    padding: 20px;
+    padding: 5px;
     border: 1px solid black;
     border-radius: 5px;
 }
@@ -41,7 +41,7 @@ textarea {
 }
 
 input[type="submit"] {
-    padding: 10px 15px;
+    padding: 10px 10px;
     background-color: #1c4124;
     color: white;
     border: none;

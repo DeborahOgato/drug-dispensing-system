@@ -46,6 +46,7 @@ if (isset($_SESSION['role']) && ($_SESSION['role'] === 'Doctor' || $_SESSION['ro
     <link rel="stylesheet" type="text/css" href="view_drugs.css">
 </head>
 <body>
+<?php include "header.html";?>
     <?php if (isset($_SESSION['role']) && ($_SESSION['role'] === 'Doctor' || $_SESSION['role'] === 'Pharmacist' || $_SESSION['role'] === 'Admin')) : ?>
     <h2>View Drugs</h2>
     <div class="search-form">
@@ -62,6 +63,7 @@ if (isset($_SESSION['role']) && ($_SESSION['role'] === 'Doctor' || $_SESSION['ro
                 <th>Drug Type</th>
                 <th>Description</th>
                 <th>Dosage Instructions</th>
+                <th>Image</th>
             </tr>
             <?php while ($drug = $result->fetch_assoc()) : ?>
                 <tr>
@@ -70,12 +72,35 @@ if (isset($_SESSION['role']) && ($_SESSION['role'] === 'Doctor' || $_SESSION['ro
                     <td><?php echo $drug['drug_type']; ?></td>
                     <td><?php echo $drug['description']; ?></td>
                     <td><?php echo $drug['dosage_instructions']; ?></td>
-                </tr>
+                    <td>
+    <?php
+    if (!empty($drug['image'])) {
+        $imageData = base64_encode($drug['image']);
+
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        $imageMimeType = finfo_buffer($finfo, base64_decode($imageData));
+        finfo_close($finfo);
+
+        // Create a link to the image viewer page
+        echo '<a href="image_viewer.php?drug_id=' . $drug['drug_id'] . '">';
+        echo '<img src="data:' . $imageMimeType . ';base64,' . $imageData . '" width="100" height="100" />';
+        echo '</a>';
+
+        // Add a button/link to view drug details
+        echo '<br>';
+        echo '<a href="view_drug_details.php?drug_id=' . $drug['drug_id'] . '">View Details</a>';
+    } else {
+        echo 'No Image';
+    }
+    ?>
+</td>
+
             <?php endwhile; ?>
         </table>
     </div>
     <?php else : ?>
         <p>You must be logged in as a doctor, pharmacist, or admin to access this page.</p>
     <?php endif; ?>
+    <?php include "footer.html";?>
 </body>
 </html>

@@ -40,6 +40,7 @@ if (isset($_SESSION['role']) && $_SESSION['role'] === 'Patient') {
     <link rel="stylesheet" type="text/css" href="patient_dashboard.css">
 </head>
 <body>
+<?php include "header.html";?>
     <?php if (isset($patient)) : ?>
     <h2>Welcome, <?php echo $username; ?>!</h2>
     <div class="dropdown">
@@ -82,5 +83,6 @@ if (isset($_SESSION['role']) && $_SESSION['role'] === 'Patient') {
     <?php else : ?>
         <p>You must be logged in as a patient to access this page.</p>
     <?php endif; ?>
+    <?php include "footer.html";?>
 </body>
 </html>

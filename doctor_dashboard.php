@@ -38,6 +38,7 @@ if (isset($_SESSION['role']) && $_SESSION['role'] === 'Doctor') {
     <link rel="stylesheet" type="text/css" href="doctor_dashboard.css">
 </head>
 <body>
+   <?php include "header.html";?>
     <?php if (isset($doctor)) : ?>
     <h2>Welcome, <?php echo $username; ?>!</h2>
     <div class="dropdown">
@@ -57,12 +58,9 @@ if (isset($_SESSION['role']) && $_SESSION['role'] === 'Doctor') {
             <a href="add_patient.php">Add New Patient</a>
             <!-- Link to view all prescriptions -->
             <a href="view_prescriptions.php">View All Prescriptions</a>
-            <!-- Link to add new prescription -->
-            <a href="add_prescription.php">Add New Prescription</a>
             <!-- Link to view all drugs -->
             <a href="view_drugs.php">View All Drugs</a>
-            <!-- Logout link -->
-            <a href="logout.php">Logout</a>
+           
         </div>
     </div>
 
@@ -88,5 +86,7 @@ if (isset($_SESSION['role']) && $_SESSION['role'] === 'Doctor') {
     <?php else : ?>
         <p>You must be logged in as a doctor to access this page.</p>
     <?php endif; ?>
+    
+    <?php include "footer.html";?>
 </body>
 </html>

@@ -1,0 +1,15 @@
+/* Add styles for the image viewer page */
+body {
+    text-align: center;
+    background-color: #f0f0f0;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    margin: 20px auto;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Add more styles as needed */
