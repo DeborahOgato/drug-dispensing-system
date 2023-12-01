@@ -1,0 +1,33 @@
+/* Add your styles for the edit drug form here */
+.edit-drug-form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.edit-drug-form label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.edit-drug-form input,
+.edit-drug-form textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+}
+
+.edit-drug-form input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.edit-drug-form input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+/* Add more styles as needed */

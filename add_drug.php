@@ -22,6 +22,7 @@ if (isset($_SESSION['role']) && ($_SESSION['role'] === 'Pharmacist' || $_SESSION
         $drug_type = $_POST['drug_type'];
         $description = $_POST['description'];
         $dosage_instructions = $_POST['dosage_instructions'];
+        $category=$_POST['category'];
 
         // Handle image upload
         if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
@@ -32,9 +33,9 @@ if (isset($_SESSION['role']) && ($_SESSION['role'] === 'Pharmacist' || $_SESSION
 
                 if ($imageData !== false) {
                     // Insert into the drugs table
-                    $stmt_drugs = $conn->prepare("INSERT INTO drugs (name, drug_type, description, dosage_instructions, image) 
-                                                 VALUES (?, ?, ?, ?, ?)");
-                    $stmt_drugs->bind_param('sssss', $name, $drug_type, $description, $dosage_instructions, $imageData);
+                    $stmt_drugs = $conn->prepare("INSERT INTO drugs (name, drug_type, description, dosage_instructions, image,category) 
+                                                 VALUES (?, ?, ?, ?, ?, ?)");
+                    $stmt_drugs->bind_param('ssssss', $name, $drug_type, $description, $dosage_instructions, $imageData,$category);
 
                     if ($stmt_drugs->execute()) {
                         $drug_number = $stmt_drugs->insert_id;
@@ -84,6 +85,8 @@ if (isset($_SESSION['role']) && ($_SESSION['role'] === 'Pharmacist' || $_SESSION
             <textarea id="dosage_instructions" name="dosage_instructions" rows="3" required></textarea>
             <label for="image">Drug Image:</label>
             <input type="file" id="image" name="image" accept="image/*">
+            <label for="category">Category:</label>
+            <input type="text" id="category" name="category" required>
 
             <input type="submit" value="Add Drug">
         </form>
